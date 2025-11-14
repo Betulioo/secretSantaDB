@@ -32,6 +32,7 @@ const register = async (req, res) => {
     if (!valUsername && !valEmail) {
       if (validatePassword(req.body.password)) {
         userBody.password = bycrypt.hashSync(userBody.password, 10);
+        userBody.username = userBody.username.toLowerCase();
         const createduser = await userBody.save();
         return res.json({ success: true, message: "Succes", data: createduser });
       } else {
@@ -50,7 +51,8 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const userInfo = req.body;
-    const userDB = await validateUsernameDB(userInfo.username);
+    const userName= req.body.username.toLowerCase();
+    const userDB = await validateUsernameDB(userName);
     console.log(userDB);
 
     if (!userDB) {
