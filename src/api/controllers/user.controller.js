@@ -27,7 +27,7 @@ const getUserById = async (req, res) => {
 const register = async (req, res) => {
   try {
     const userBody = new User(req.body);
-    const valUsername = await validateUsernameDB(req.body.username);
+    const valUsername = await validateUsernameDB(req.body.username).toLowerCase();
     const valEmail = await validateEmailDB(req.body.email);
     if (!valUsername && !valEmail) {
       if (validatePassword(req.body.password)) {
