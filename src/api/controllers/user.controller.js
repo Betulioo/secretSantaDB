@@ -53,13 +53,13 @@ const login = async (req, res) => {
     const userInfo = req.body;
     const userName= req.body.username.toLowerCase();
     const userDB = await validateUsernameDB(userName);
-    console.log(userDB);
+    // console.log(userDB);
 
     if (!userDB) {
       return res.json({ success: false, message: "Username does not exist" });
     }
     if (!bycrypt.compareSync(userInfo.password, userDB.password)) {
-      return res.json({ success: false, message: "Password does not match" });
+      return res.status(401).json({ success: false, message: "Password does not match" });
     }
 
     const token = generateToken(userDB._id, userDB.email, userDB.roll, userDB.collection, userDB.username);
