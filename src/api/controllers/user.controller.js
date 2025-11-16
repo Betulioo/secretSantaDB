@@ -56,7 +56,7 @@ const login = async (req, res) => {
     // console.log(userDB);
 
     if (!userDB) {
-      return res.json({ success: false, message: "Username does not exist" });
+      return res.status(401).json({ success: false, message: "Username does not exist" });
     }
     if (!bycrypt.compareSync(userInfo.password, userDB.password)) {
       return res.status(401).json({ success: false, message: "Password does not match" });
